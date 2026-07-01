@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#184130">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="HOA Form">
+  <title>HOA Document Generator</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">FIELD TOOL</p>
+      <h1>HOA Document Generator</h1>
+      <p class="subtitle">Complete the form, collect the homeowner's signature, and generate the approved HOA PDF.</p>
+    </div>
+    <div id="offlineStatus" class="status-pill" role="status" aria-live="polite">Preparing offline access…</div>
+  </header>
+
+  <main class="app-shell">
+    <form id="hoaForm" autocomplete="off" novalidate>
+      <div class="form-columns">
+        <section class="card" aria-labelledby="homeownerHeading">
+          <div class="section-heading">
+            <span class="step">1</span>
+            <div>
+              <h2 id="homeownerHeading">Homeowner and property</h2>
+              <p>Only homeowner name and street address are required.</p>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field span-2">
+              <span>Homeowner name <b aria-hidden="true">*</b></span>
+              <input id="ownerName" name="ownerName" type="text" required enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field span-2">
+              <span>Homeowner street address <b aria-hidden="true">*</b></span>
+              <input id="ownerAddress" name="ownerAddress" type="text" required enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field city-field">
+              <span>City</span>
+              <input id="city" name="city" type="text" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field state-field">
+              <span>State</span>
+              <input id="state" name="state" type="text" maxlength="2" autocapitalize="characters" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field zip-field">
+              <span>ZIP code</span>
+              <input id="zip" name="zip" type="text" inputmode="numeric" maxlength="10" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field span-2">
+              <span>Subdivision name</span>
+              <input id="subdivision" name="subdivision" type="text" enterkeyhint="next" autocomplete="off">
+            </label>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="hoaHeading">
+          <div class="section-heading">
+            <span class="step">2</span>
+            <div>
+              <h2 id="hoaHeading">HOA contact information</h2>
+              <p>Complete what is available. Blank fields remain blank on the PDF.</p>
+            </div>
+          </div>
+
+          <div class="field-grid">
+            <label class="field span-2">
+              <span>Property management company</span>
+              <input id="managementCompany" name="managementCompany" type="text" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field span-2">
+              <span>Contact name (HOA)</span>
+              <input id="hoaContact" name="hoaContact" type="text" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field">
+              <span>Telephone (HOA)</span>
+              <input id="hoaPhone" name="hoaPhone" type="tel" inputmode="tel" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field">
+              <span>Alternate telephone <small>(second box)</small></span>
+              <input id="hoaPhoneAlt" name="hoaPhoneAlt" type="tel" inputmode="tel" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field">
+              <span>Email (HOA)</span>
+              <input id="hoaEmail" name="hoaEmail" type="email" inputmode="email" enterkeyhint="next" autocomplete="off">
+            </label>
+
+            <label class="field">
+              <span>Next meeting date</span>
+              <input id="nextMeeting" name="nextMeeting" type="date" autocomplete="off">
+            </label>
+          </div>
+        </section>
+
+        <section class="card" aria-labelledby="projectHeading">
+          <div class="section-heading">
+            <span class="step">3</span>
+            <div>
+              <h2 id="projectHeading">Project details</h2>
+              <p>Select all applicable sides. Like-for-like requires one answer.</p>
+            </div>
+          </div>
+
+          <fieldset class="choice-block">
+            <legend>Side of home <small>Select all that apply</small></legend>
+            <div class="choice-row four-up">
+              <label class="choice"><input type="checkbox" name="side" value="front"><span>Front</span></label>
+              <label class="choice"><input type="checkbox" name="side" value="back"><span>Back</span></label>
+              <label class="choice"><input type="checkbox" name="side" value="right"><span>Right</span></label>
+              <label class="choice"><input type="checkbox" name="side" value="left"><span>Left</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset id="likeFieldset" class="choice-block required-choice">
+            <legend>Like for like <b aria-hidden="true">*</b></legend>
+            <div class="choice-row two-up">
+              <label class="choice"><input type="radio" name="likeForLike" value="yes" required><span>Yes</span></label>
+              <label class="choice"><input type="radio" name="likeForLike" value="no" required><span>No</span></label>
+            </div>
+            <p id="likeError" class="field-error" hidden>Please select Yes or No.</p>
+          </fieldset>
+
+          <label class="authorization-choice">
+            <input id="authorization" name="authorization" type="checkbox">
+            <span>Mark the authorization box shown before “I the undersigned” on the original form.</span>
+          </label>
+        </section>
+
+        <section class="card signature-card" aria-labelledby="signatureHeading">
+          <div class="section-heading signature-heading">
+            <span class="step">4</span>
+            <div>
+              <h2 id="signatureHeading">Homeowner signature</h2>
+              <p>Sign with a finger or Apple Pencil. The document date is added automatically.</p>
+            </div>
+            <div class="today-badge"><span>Document date</span><strong id="todayDisplay"></strong></div>
+          </div>
+
+          <div class="signature-wrap">
+            <canvas id="signaturePad" aria-label="Homeowner signature area"></canvas>
+            <span class="signature-guide">Sign here</span>
+          </div>
+          <div class="signature-actions">
+            <button id="clearSignature" class="text-button" type="button">Clear signature</button>
+            <span id="signatureStatus" class="signature-status">Signature is optional.</span>
+          </div>
+        </section>
+      </div>
+
+      <div id="formError" class="form-error" role="alert" hidden></div>
+
+      <div class="action-bar">
+        <p>Customer information stays on this device and is not uploaded.</p>
+        <button id="generateButton" class="primary-button" type="submit">Generate HOA Document</button>
+      </div>
+    </form>
+
+    <section id="resultPanel" class="result-panel" hidden aria-labelledby="resultHeading">
+      <div class="result-header">
+        <div>
+          <p class="eyebrow">DOCUMENT READY</p>
+          <h2 id="resultHeading">Completed HOA document</h2>
+          <p>The PDF has been generated. Open it to save, share, or take a full-page screenshot.</p>
+        </div>
+        <div class="result-actions">
+          <a id="openPdfLink" class="secondary-button" href="#" target="_blank" rel="noopener">Open generated PDF</a>
+          <button id="startNewButton" class="text-button danger" type="button">Start new form</button>
+        </div>
+      </div>
+
+      <div class="preview-shell">
+        <canvas id="previewCanvas" aria-label="Preview of completed HOA document"></canvas>
+      </div>
+      <p class="result-note">The information remains visible until “Start new form” is selected.</p>
+    </section>
+  </main>
+
+  <div id="workingOverlay" class="working-overlay" hidden aria-live="assertive" aria-busy="true">
+    <div class="spinner"></div>
+    <strong>Generating HOA document…</strong>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

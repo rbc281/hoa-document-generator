@@ -1,0 +1,15 @@
+{
+  "name": "HOA Document Generator",
+  "short_name": "HOA Form",
+  "description": "Offline-ready HOA form and PDF generator for in-home appointments.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#f2f5f3",
+  "theme_color": "#184130",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
